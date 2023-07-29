@@ -1,34 +1,36 @@
-let ageInput = document.getElementById("age");
-let nameInput = document.getElementById("name");
+//your JS code here. If required.
+function submitForm(event) {
+  event.preventDefault(); // Prevent form submission
+  
+  const ageInput = document.getElementById('age');
+  const nameInput = document.getElementById('name');
+  
+  const age = parseInt(ageInput.value);
+  const name = nameInput.value;
+  
+  if (age && name) {
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (age >= 18) {
+          resolve(name);
+        } else {
+          reject(name);
+        }
+      }, 4000);
+    });
+    
+    promise
+      .then((name) => {
+        alert(`Welcome, ${name}. You can vote.`);
+      })
+      .catch((name) => {
+        alert(`Oh sorry ${name}. You aren't old enough.`);
+      });
+      
+    ageInput.value = '';
+    nameInput.value = '';
+  }
+}
 
-
-let submitBtn = document.getElementById("btn");
-let form = document.getElementsByTagName("form")[0];
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-})
-
-let bodyElement = document.getElementsByTagName("body")[0];
-submitBtn.addEventListener("click",() => {
-    if (ageInput.value == "" || nameInput.value == "") {
-        alert("Please enter valid details");
-        return;
-    }
-  const prom = new Promise((resolve, reject) => {
-    let age = Number(ageInput.value);
-    if (age > 18) {
-       resolve();
-    } else {
-      reject();
-    }
-  })
-
-  prom.then(() => {
-    let innertext = `Welcome, ${nameInput.value}, You can vote.`
-    alert(innertext);
-  }).catch(() => {
-    let innerText = `Oh sorry ${nameInput.value}. You aren't old enough.`;
-    alert(innerText);
-  })
-})
+const form = document.getElementById('myForm');
+form.addEventListener('submit', submitForm);
